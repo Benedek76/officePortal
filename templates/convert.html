@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- jsPDF és html2canvas betöltése CDN-ről -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+    <style>
+
+    #editor-container, #editor-container2, #editor-container3, #editor-container4 {
+        height: 150px;
+        width: 100%;
+    }
+    #preview, #preview2, #preview3, #preview4 {
+        display: none;
+        width: 1100px;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+        white-space: pre-wrap; /* Maintain whitespace formatting */
+    }
+    #editor-container2, #editor-container3, #editor-container4 {
+        height: 50px;
+    }
+    .generate{
+        width: 100%;
+        padding: 20px;
+        font-size: 20px;
+        background-color: #8CEC00;
+        color: black;
+        cursor: pointer;
+        border-width: 4px;
+        font-family: sans-serif!important;
+    }
+    button {
+        background-color: black;
+        padding: 10px;
+        color: #8CEC00;
+        cursor: pointer;
+    }
+    a {
+        float: right;
+        cursor: pointer;
+    }
+
+
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: solid 1px black; padding: 0 1% 0 1%; background-color: #8CEC00;">
+        <h2>Wellcome, {{ username }}!</h2>
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button class="form-button" style="font-family: monospace; padding: 5px 10px 5px 10px;" type="submit">Logout</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="information">
+            <img src="{{ url_for('static', filename='/assets/images/page_1.png')}}" class="convert-images" id="image1">
+            <div id="formContainer" style="background-color: white;">
+                <form id="myForm" style="color: black">
+                    <h3 id="price-title"> 1. PRICE</h3>
+                    <textarea id="name1" name="price1" style="display:none; text-align: left;">
+                        "Enter the PRICE USD/EUR" EXW POLAND "Update INCOTERMS & ORIGIN if necessary": Case of 24 cans
+                        Hype Energy MFP/SUGAR FREE/ENLITE/TWISTED TROPICAL/TWISTED CHERRY/BUZZ/MOJITO/UP/XTRA CHEESECAKE/XTRA WATERMELON/MFP GOLD/AFTERDARK/ON 250ml.
+                        "Enter the PRICE USD/EUR" EXW POLAND "Update INCOTERMS & ORIGIN if necessary": Case of 24 cans
+                        Hype Energy MFP/SUGAR FREE/ENLITE/TWISTED TROPICAL/TWISTED CHERRY/BUZZ/MOJITO/UP/XTRA CHEESECAKE/XTRA WATERMELON/MFP GOLD/AFTERDARK/ON 500ml.
+                        Hype HQ in-house Marketing Support includes free of charge:
+                        - Access and use of all Hype Energy global assets (all sponsorships covering the four main platforms the brand is highly active in including motorsports, music, eSports and lifestyle / culture, in addition to other high profile marketing events, photo shoots, videos...etc.).
+                        - Dedicated Social Media support (content creation, geo-targeting and community management).
+                        - Public Relations, Marketing and Event Planning support.
+                        - Support sourcing and creating unique merchandise materials including handling of logistic/shipping in-house.
+                        - Graphic Design time using our specialised in-house team. (not including production cost) Access to Hype's In-House Marketing Support is always provided free of charge, which is a huge cost savings exclusively offered to our distributors.
+                        Hype will invest up to *TO BE COMPLETED* % of the EXW HMM Selling cost price, on amounts duly paid by the Distributor, towards a local Marketing Budget. This contribution is dependent on the presentation of a strategic marketing plan by the distributor, and approval of the plan/activities by the Hype Regional Marketing Director.
+                        Please review our complete merchandise catalogue (current available items) for more details regarding Hype Energy merchandise, which is also available to buy at cost price.
+                    </textarea>
+                    <div id="editor-container"></div>
+                    <div id="preview"></div>
+
+                    <!-- New sections with default text -->
+                    <br>
+                    <br>
+                    <h3 id="minimum-order-title">2. MINIMUM ORDER</h3>
+                    <textarea id="name2" name="order2" style="display:none;">
+                        Minimum order quantity is: Complete with minimum order quantity, if not defined write "To be agreed with distributor".
+                    </textarea>
+                    <div id="editor-container2"></div>
+                    <div id="preview2"></div>
+
+                    <h3>3. PAYMENT METHODS</h3>
+                    <textarea id="name3" name="payment3" style="display:none;">
+                        Payment conditions: *TO BE COMPLETED*
+                    </textarea>
+                    <div id="editor-container3"></div>
+                    <div id="preview3"></div>
+
+                    <h3>4. MARKET</h3>
+                    <textarea id="name4" name="market4" style="display:none;">
+                        The product will only be sold in the contracted country.
+                        Please note: These conditions are valid for one month from the date of issue of this document (shown above).
+                    </textarea>
+
+                    <div id="editor-container4"></div>
+                    <div id="preview4"></div>
+                </form>
+            </div>
+
+            <!-- Static image 2 -->
+            <img src="{{ url_for('static', filename='/assets/images/page_4.png')}}" class="convert-images" id="image4">
+            <img src="{{ url_for('static', filename='/assets/images/page_5.png')}}" class="convert-images" id="image5">
+            <img src="{{ url_for('static', filename='/assets/images/page_6.png')}}" class="convert-images" id="image6">
+            <div style="display: flex;
+                        margin: auto;
+                        justify-content: space-between;
+                        width: 99%;
+                        gap: 1%;
+                        ">
+                <a href="{{ url_for('compare') }}"
+                   title=""
+                   style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px; text-decoration:none"
+                   class="generate">
+                    OFFICE PORTAL
+                </a>
+                <a title=""
+                   style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px; text-decoration:none"
+                   class="generate"
+                   onclick="generatePDF()">
+                   GENERATE PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Initialize Quill editors
+        var quill = new Quill('#editor-container', { theme: 'snow' });
+        var quill2 = new Quill('#editor-container2', { theme: 'snow' });
+        var quill3 = new Quill('#editor-container3', { theme: 'snow' });
+        var quill4 = new Quill('#editor-container4', { theme: 'snow' });
+
+
+        // Set initial content from textarea
+        function setInitialContent(quill, textareaId) {
+            var textarea = document.getElementById(textareaId).value;
+            var formattedText = textarea.replace(/\n/g, '<br>');
+            quill.clipboard.dangerouslyPasteHTML(formattedText);
+        }
+
+
+        setInitialContent(quill, 'name1');
+        setInitialContent(quill2, 'name2');
+        setInitialContent(quill3, 'name3');
+        setInitialContent(quill4, 'name4');
+
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'pt' });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+
+
+            // Function to add images to the PDF
+            async function addImageToPDF(imgId) {
+                const img = document.getElementById(imgId);
+                const imgData = await getImageData(img);
+                const imgHeight = pageHeight;
+                const imgWidth = imgHeight * img.naturalWidth / img.naturalHeight;
+                const imgX = (pageWidth - imgWidth) / 2;
+                doc.addImage(imgData, "JPEG", imgX, 0, imgWidth, imgHeight);
+            }
+
+            // Add image 1
+            await addImageToPDF("image1");
+
+            // Add new page for the form content
+            doc.addPage();
+
+            // Get the content of the Quill editor
+            const editorContent = quill.root.innerHTML;
+            const previewDiv = document.getElementById("preview");
+
+            previewDiv.style.textAlign = "left"; // Align left in the PDF also
+            previewDiv.innerHTML = `<h3>1. PRICE</h3>${editorContent}`;
+            previewDiv.style.border = "none"; // Remove border of text area
+
+            // Add the title and content to the preview div
+            previewDiv.innerHTML = `<h3>1. PRICE</h3>${editorContent}`;
+            previewDiv.style.display = "block";
+
+            // Convert preview div to canvas and add to PDF
+            const formCanvas = await html2canvas(previewDiv);
+            const formImgData = formCanvas.toDataURL("image/png");
+            doc.addImage(formImgData, 'PNG', 10, 10);
+
+            // Hide the preview div
+            previewDiv.style.display = "none";
+
+            // Add new page for the combined new sections
+            doc.addPage();
+
+            const sections = [
+                { editor: quill2, title: '2. MINIMUM ORDER', preview: 'preview2' },
+                { editor: quill3, title: '3. PAYMENT METHODS', preview: 'preview3' },
+                { editor: quill4, title: '4. MARKET', preview: 'preview4' }
+            ];
+
+            let combinedContent = '';
+            for (const section of sections) {
+                const content = section.editor.root.innerHTML;
+                combinedContent += `<div style="padding-top: 20px;"><h3>${section.title}</h3><div>${content}</div></div>`;
+            }
+
+            const combinedPreviewDiv = document.createElement("div");
+            combinedPreviewDiv.innerHTML = combinedContent;
+            document.body.appendChild(combinedPreviewDiv);
+            const combinedCanvas = await html2canvas(combinedPreviewDiv);
+            const combinedImgData = combinedCanvas.toDataURL("image/png");
+            doc.addImage(combinedImgData, 'PNG', 10, 10);
+            document.body.removeChild(combinedPreviewDiv);
+
+            // Add new page for each remaining image
+            const images = ["image4", "image5", "image6"];
+            for (let i = 0; i < images.length; i++) {
+                doc.addPage();
+                await addImageToPDF(images[i]);
+            }
+
+            // Save PDF
+            doc.save("form_data.pdf");
+        }
+
+        function getImageData(img) {
+            return new Promise(resolve => {
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL("image/jpeg"));
+            });
+        }
+    </script>
+</body>
+</html>

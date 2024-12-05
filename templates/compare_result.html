@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+    <title>Comparison Result</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: solid 1px black; padding: 0 1% 0 1%; background-color: #8CEC00;">
+        <h2>Wellcome, {{ username }}!</h2>
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button class="form-button" style="font-family: monospace; padding: 5px 10px 5px 10px;" type="submit">Logout</button>
+        </form>
+    </div>
+    <div id="compare-outer" style="background-color: white; width: 60%; margin: 2% auto;">
+        <div id="res-outer" style="
+                display: flex;
+                margin: 2rem auto;
+                padding: 2rem;
+                justify-content: space-between;
+                gap: 10%;
+                font-family: monospace;">
+            <div id="result" style="
+                flex: 1;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Középre igazítja a h1-et */
+                width: 100%;
+                ">
+                <h2 style="margin-bottom: 5vh;">Comparison Result</h2>
+                <div>{{ result|safe }}</div>
+            </div>
+            <div style="
+                flex: 1;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Középre igazítja a h1-et */
+                width: 100%;">
+                <h2 style="margin-bottom: 5vh;">Master (docx) file content</h2>
+                <pre style="margin: 0;">{{ docx_content }}</pre>
+            </div>
+        </div>
+    <div id="back-button" style="display: flex; margin-top: 2rem;">
+        <a href="{{ url_for('compare') }}" class="back-button" style="font-family: monospace; font-weight: bold; margin: 2% auto; padding: 10px 20px; text-decoration: none;">BACK</a>
+    </div>
+
+</body>
+</html>
+
+

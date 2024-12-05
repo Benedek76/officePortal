@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+    <style>
+
+
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+        <img src="{{ url_for('static', filename='assets/images/logo.png') }}" alt="Logo">
+      <h1 class="box_title" style="font-family: 'Qaranta';"><br>OFFICE PORTAL<br>LOGIN</h1>
+      <p class="box_subtitle">Please log in to continue</p>
+    <form class="form" method="POST" action="{{ url_for('login') }}">
+        <label for="username">Username:</label>
+        <input class="form_input" type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input class="form_input" type="password" id="password" name="password" required>
+
+        <button class="form_button" type="submit">Login</button>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+  </div>
+  <footer>
+    <div id="version">
+      <p>v.1.0</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+</head>
+<body style="background-image: url('{{ url_for('static', filename='assets/images/carbon_background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: solid 1px black; padding: 0 1% 0 1%; background-color: #8CEC00;">
+        <h2>Wellcome, {{ username }}!</h2>
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button class="form-button" style="font-family: monospace; padding: 5px 10px 5px 10px;" type="submit">Logout</button>
+        </form>
+    </div>
+
+    <h1 style="text-align: center; margin: 5% 0 5% 0; font-family: 'Qaranta'; color: white;">HYPE OFFICE PORTAL</h1>
+
+    <div class="outer">
+        <!-- Left Div -->
+        <div class="left-inner-div" style="border-radius: 10px; box-shadow: 3px 3px #8CEC00; margin: 10px; background-color: #f8f8f8;">
+            <p style="text-align: center; font-size: 1.5vw; margin-bottom: 0px;">Document comparison</p>
+
+            <form action="{{ url_for('compare') }}" method="POST" enctype="multipart/form-data">
+                <div class="inner-row">
+                    <div id="left-left-inner-div" class="inner-column">
+                        <div class="file-input-container">
+                            <label for="file1" class="file-icon">
+                                <img src="{{ url_for('static', filename='assets/images/pdf-icon.png') }}" alt="PDF upload icon">
+                            </label>
+                            <input type="file" name="file1" id="file1" class="file-input" accept=".pdf" required>
+                        </div>
+                    </div>
+                    <div id="left-center-inner-div" class="inner-column">
+                        <img style="width:30%; height: 30%; margin: auto;" src="{{ url_for('static', filename='assets/images/arrow-vica-versa.png') }}" alt="vica versa icon">
+                    </div>
+                    <div id="left-right-inner-div" class="inner-column">
+                        <div class="file-input-container">
+                            <label for="file2" class="file-icon">
+                                <img src="{{ url_for('static', filename='assets/images/docx-icon.png') }}" style="height: 100%;" alt="DOCX upload icon">
+                            </label>
+                            <input type="file" name="file2" id="file2" class="file-input" accept=".docx" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px;" type="submit" class="form-button">COMPARE</button>
+            </form>
+        </div>
+
+        <!-- Right Div -->
+        <div class="right-inner-div" style="border-radius: 10px; box-shadow: 5px 5px #8CEC00; margin: 10px; background-color: #f8f8f8;">
+            <p style="text-align: center; font-size: 1.5vw; margin-bottom: 0px;">Price Proposal</p>
+
+            <div class="inner-row">
+                <div id="right-left-inner-div-3" class="inner-column">
+                    <div class="file-input-container">
+                        <label class="file-icon" style="cursor:default;">
+                            <img src="{{ url_for('static', filename='assets/images/web-icon.png') }}" style="height: 90%;" alt="">
+                        </label>
+                    </div>
+                </div>
+                <div id="right-center-inner-div-3" class="inner-column">
+                    <img style="width:25%; height: 15%; margin: auto;" src="{{ url_for('static', filename='assets/images/arrow-right.png') }}" alt="vica versa ikon">
+                </div>
+                <div id="right-right-inner-div-3" class="inner-column">
+                    <div class="file-input-container">
+                        <label class="file-icon" style="cursor:default;">
+                            <img src="{{ url_for('static', filename='assets/images/pdf-icon.png') }}" alt="">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{{ url_for('convert') }}" title="" style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px; text-decoration:none" class="form-button">CONVERT</a>
+        </div>
+    </div>
+
+    <!-- 2nd row outer -->
+    <div class="outer" id="sec-row-outer" style="margin-top: 5%;">
+        <!-- Left Div -->
+        <div class="left-inner-div" style="border-radius: 10px; box-shadow: 3px 3px #8CEC00; margin: 10px; background-color: #f8f8f8;">
+            <p style="text-align: center; font-size: 1.5vw; margin-bottom: 0px;">PDF watermarker</p>
+
+            <form action="{{ url_for('watermark') }}" method="POST" enctype="multipart/form-data">
+                <div class="inner-row">
+                    <div id="left-left-inner-div-2" class="inner-column">
+                        <div class="file-input-container" style="text-align: center;">
+                            <label for="file3" class="file-icon" style="cursor: pointer;">
+                                <img src="{{ url_for('static', filename='assets/images/pdf-icon.png') }}" alt="PDF upload icon" style="width: 50px; height: auto;">
+                            </label>
+                            <!--Hided upload -->
+                            <input type="file" id="file3" name="file" accept="application/pdf" style="display: none;" required>
+                        </div>
+                    </div>
+                    <div id="left-center-inner-div-2" class="inner-column">
+                        <img style="width:25%; height: 15%; margin: auto;" src="{{ url_for('static', filename='assets/images/arrow-right.png') }}" alt="right arrow icon">
+                    </div>
+                    <div id="left-right-inner-div-2" class="inner-column">
+                        <div class="file-input-container">
+                            <label>
+                                <img src="{{ url_for('static', filename='assets/images/watermark.png') }}" style="width: 50px; height: auto;" alt="Watermark icon">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px;" class="form-button">WATERMARK</button>
+            </form>
+        </div>
+
+        <!-- Right Div -->
+        <div class="right-inner-div" style="border-radius: 10px; box-shadow: 5px 5px #d6d6d6; margin: 10px; background-color: #f8f8f8; filter: blur(2px); -webkit-filter: blur(2px);">
+            <p style="text-align: center; font-size: 1.5vw; margin-bottom: 0px;">New application<br />Coming soon</p>
+
+            <div class="inner-row">
+                <div id="right-left-inner-div-4" class="inner-column">
+                    <div class="file-input-container"></div>
+                </div>
+                <div id="right-center-inner-div-4" class="inner-column">
+                </div>
+                <div id="right-right-inner-div-4" class="inner-column">
+                    <div class="file-input-container">
+                    </div>
+                </div>
+            </div>
+            <a title="blind-button" style="display: block; margin:0 auto 5% auto; font-family: monospace; font-weight: bold; letter-spacing: 2px; text-decoration:none; -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */ filter: grayscale(100%); cursor: none;" class="form-button">NEW FUNCTION</a>
+        </div>
+    </div>
+
+    <!-- Keresőmező -->
+    <div class="contacts-outer" style="width: 66%; margin: 5% auto 15% auto; display: flex; flex-direction: column; align-items: center; background-color: white; padding: 20px; border: 10px solid white; border-radius: 10px;">
+
+        <div class="search" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; width: 100%;">
+            <p style="color: #40403f; font-size: 1.5vw; font-weight: 200;">Contacts</p>
+            <form method="POST" action="{{ url_for('phonebook') }}" style="display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+                <input type="text" name="search" placeholder="Search contacts..." required style="width: 100%; max-width: 600px; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+<!--                <button type="submit" style="padding: 8px 20px; border-radius: 5px; background-color: #8CEC00; color: white; border: none; cursor: pointer;">Search</button>-->
+                <button type="submit" class="form-button-search">SEARCH</button>
+            </form>
+        </div>
+
+        <!-- Keresési eredmények -->
+        <div style="width: 100%; display: flex; justify-content: center; margin-top: 20px; overflow-x:auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                <thead>
+                    <tr style="background-color: #8CEC00;">
+                        <th>DEPARTMENT</th>
+                        <th>NAME</th>
+                        <th>DEPT</th>
+                        <th>NUMBER</th>
+                        <th>EXTENSION</th>
+                        <th>EMAIL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.dept_name }}</td>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.dept }}</td>
+                        <td>{{ contact.number }}</td>
+                        <td>{{ contact.extension }}</td>
+                        <td>{{ contact.email }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 10px; border: 1px solid #ddd; text-align: center;">No contacts, please type in.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>
